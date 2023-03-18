@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
@@ -6,24 +7,47 @@ import { Input } from '../components/Input';
 import Logo from '../components/Logo';
 import useInput from '../hooks/useInput';
 import { apis } from '../shared/axios';
+import { cookies } from '../shared/cookie';
 //로그인페이지
 function Login() {
   const navigator = useNavigate()
   const [idValue, idHandler] = useInput('')
   const [pwValue, pwHandler] = useInput('')
+  //?영성님게 보내야 하는 api.----
+  // const logindata = {
+  //   userId: idValue,
+  //   password: pwValue
+  // }
+  //?----------------------------
 
-
-  const loginHandler = (e) => {
+  //!목서버▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼수정필요▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+  const logindata = {
+    id: idValue,
+    password: pwValue
+  }
+  //수정필요
+  const loginHandler = async (e) => {
     e.preventDefault();
     // *비동기 함수를 사용하여 데이터를 보내준다. 위에 aync 필수
-    const logindata = {
-      userId: idValue,
-      password: pwValue
+    try {
+      const result = await apis.post('/login', logindata)
+      cookies.set("token", result.data.token, { path: "/" })
+      navigator("/")
+    } catch (e) {
+      alert("error!!", e)
     }
-    // apis.post({/ api / login, logindata})
-
   }
+  //!▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲수정필요▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
+
+
+  //*프론트 가드. 토큰값 가지고 있으면 홈으로
+  useEffect(() => {
+    const token = cookies.get("token");
+    if (token) {
+      navigator("/");
+    }
+  }, []);
 
   return (
     <>

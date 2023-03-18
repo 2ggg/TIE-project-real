@@ -5,7 +5,7 @@ function Update() {
   return (
     <>
       <Header />
-      <p>수정페이지</p>
+      <p style={{ backgroundColor: '#d7fa5a' }} >수정페이지</p>
     </>
   )
 }

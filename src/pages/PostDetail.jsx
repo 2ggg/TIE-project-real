@@ -5,7 +5,7 @@ function PostDetail() {
   return (
     <>
       <Header />
-      <p>상세페이지</p>
+      <p style={{ backgroundColor: '#7ff3b3' }}>상세페이지</p>
     </>
   )
 }

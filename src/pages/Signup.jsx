@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Button from '../components/Button'
 import { Input } from '../components/Input'
 import Logo from '../components/Logo'
 import useInput from '../hooks/useInput'
 import { apis } from '../shared/axios'
+import { cookies } from '../shared/cookie'
+
 
 function Signup() {
+  const navigator = useNavigate()
   const [userID, userIDHandler] = useInput(``)
   const [nickName, nickNameHandler] = useInput(``)
   const [userPW, userPWHandler] = useInput(``)
@@ -25,24 +29,25 @@ function Signup() {
     // apis.post('/api/signup',userinpo)
   }
 
-  const checkID = () => {
+  const checkID = async () => {
     //*아이디 체크를 위해 보내기
     // const checkinpo = { userId: userID }
-    // apis.post('/api/signup/check', checkinpo)
-
-    //!받는값
-    // * 201 아이디 중복이 없을시
-    // {
-    // "duplicationResult": false,
-    // ”msg” : ”사용 가능한 아이디 입니다.”
-    // }
-
-    // * 400 아이디 중복이 있을시
-    // {
-    // "duplicationResult": true,
-    // ”msg”:”중복된 아이디가 있습니다.”
+    // try {
+    //   await apis.post('/api/signup/check', checkinpo)
+    // } catch (e) {
+    //   alert(e)
     // }
   }
+
+  //!프론트 가드. 토큰값 가지고 있으면 홈으로
+  useEffect(() => {
+    const token = cookies.get("token");
+    if (token) {
+      navigator("/");
+    }
+  }, []);
+
+
 
   return (
     <SubmitForm onSubmit={singnUpHandler}>

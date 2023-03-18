@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './Button';
@@ -11,22 +11,25 @@ import Logo from './Logo';
 
 function Header() {
   const navigator = useNavigate()
-
   // *쿠키 받아와서 토큰 값 저장. cookie get ()
-  //*톸
+  const token = cookies.get("token");
+
+  const logInHandler = () => {
+    navigator('/login')
+  }
+  const logOutHandler = () => {
+    cookies.remove("token")
+    navigator('/')
+  }
+
+
   return (
     <HeaderContainer>
       <Logo>TIE</Logo>
-      {/* !닉네임 조건필요 */}
-      <div><p>여기는 닉네임 넣을것</p></div>
+      {token ? <div><p>여기는 닉네임 넣을것</p></div> : null}
       <Button onClick={() => navigator('/posts')} >작성</Button>
-      {/* !로그인 로그아웃 조건 필요 */}
-      <Button onClick={() => navigator('/login')} height={'38px'} width={'60px'}>로그인</Button>
-
-      {/* 로그아웃
-      <Button onClick={() => {
-        cookies.remove("token")
-        navigator('/')}} height={'38px'} width={'60px'}>로그아웃</Button> */}
+      {!token ? <Button onClick={logInHandler} height={'38px'} width={'60px'}>login</Button> :
+        <Button onClick={logOutHandler} height={'38px'} width={'60px'}>logout</Button>}
     </HeaderContainer >
   );
 };

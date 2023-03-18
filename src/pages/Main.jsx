@@ -9,8 +9,8 @@ function Main() {
   return (
     <div>
       <Header />
-      홈페이지
-    </div>
+      <h1 style={{ backgroundColor: '#ff8e8e' }}>홈페이지</h1>
+    </div >
   )
 }
 
