@@ -1,18 +1,34 @@
 {
   "main":[
     {
-    "postId": 1,
-    "title":"게시글 제목1",
-    "nickname":"작성자 이름1",
-    "img":null,
-    "createdAt" : "2023-03-17 19:22:22",
-    "updatedAt": "2023-03-17 19:22:22"
+      "postId": 1,
+      "title":"게시글 제목1asdfasdfadf",
+      "nickname":"작성자 이름1asdfasdfasdf",
+      "img":"false",
+      "createdAt" : "2023-03-17 19:22:22",
+      "updatedAt": "2023-03-17 19:22:22",
+      "comments": [
+        {
+          "commentId": 2,
+          "userId": 1,
+          "nickname": "Developer",
+          "comment": "안녕하세요 2번째 댓글입니다.",
+          "createdAt": "2023-03-17 19:22:22"
+        },
+        {
+          "commentId": 1,
+          "userId": 1,
+          "nickname": "Developer",
+          "comment": "안녕하세요 댓글입니다.",
+          "createdAt": "2023-03-17 19:22:22"
+        }
+      ]
     },
     {
     "postId": 2,
     "title":"게시글 제목2",
     "nickname":"작성자 이름2",
-    "img":null,
+    "img":"false",
     "createdAt" : "2023-03-17 19:22:22",
     "updatedAt": "2023-03-17 19:22:22"
     },
@@ -20,7 +36,7 @@
     "postId": 3,
     "title":"게시글 제목3",
     "nickname":"작성자 이름3",
-    "img": null,
+    "img": "false",
     "createdAt" : "2023-03-17 19:22:22",
     "updatedAt": "2023-03-17 19:22:22"
     },
@@ -28,7 +44,7 @@
       "postId": 4,
       "title":"게시글 제목4",
       "nickname":"작성자 이름4",
-      "img": null,
+      "img": "false",
       "createdAt" : "2023-03-17 19:22:22",
       "updatedAt": "2023-03-17 19:22:22"
     },
@@ -36,7 +52,7 @@
       "postId": 5,
       "title":"게시글 제목5",
       "nickname":"작성자 이름5",
-      "img": null,
+      "img": "false",
       "createdAt" : "2023-03-17 19:22:22",
       "updatedAt": "2023-03-17 19:22:22"
     },
@@ -44,7 +60,7 @@
       "postId": 6,
       "title":"게시글 제목6",
       "nickname":"작성자 이름6",
-      "img": null,
+      "img": "false",
       "createdAt" : "2023-03-17 19:22:22",
       "updatedAt": "2023-03-17 19:22:22"
     },
@@ -52,7 +68,7 @@
       "postId": 7,
       "title":"게시글 제목7ㅁㄴㅇㄻㄴㅇㄻㅇㅁㄴㅇㄻㄴㅇㄹ",
       "nickname":"작성자 이름7ㅁㄴㅇㄻㄴㅇㄻㅇㄴㄻㄴㅇㄹ",
-      "img": null,
+      "img": "false",
       "createdAt" : "2023-03-17 19:22:22",
       "updatedAt": "2023-03-17 19:22:22"
     },
@@ -60,7 +76,7 @@
       "postId": 8,
       "title":"게시글 제목8",
       "nickname":"작성자 이름8",
-      "img": null,
+      "img": "false",
       "createdAt" : "2023-03-17 19:22:22",
       "updatedAt": "2023-03-17 19:22:22"
     }

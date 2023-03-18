@@ -1,41 +1,22 @@
 import './App.css';
-import styled from 'styled-components';
 import Router from './shared/Router';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Container, Wrap } from './components/StyledComponents';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Wrap>
-      <Container>
-        <Router />
-      </Container>
-    </Wrap>
+    <QueryClientProvider client={queryClient}>
+      <Wrap>
+        <Container>
+          <Router />
+        </Container>
+      </Wrap>
+    </QueryClientProvider>
   );
 };
-
 export default App;
 
-const Wrap = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: #C2DEFF;
-  display: flex;
-`;
 
-const Container = styled.div`
-  width: 375px;
-  height: 767px;
-  background-color: #FFFF;
-  margin : auto;
-  overflow: scroll;
-  &::-webkit-scrollbar
-  {
-    position: absolute;
-    right: 0;
-    width: 5px;
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar-thumb{
-    background-color: #c1c8cf;
-  }
 
-`;

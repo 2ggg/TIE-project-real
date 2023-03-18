@@ -11,12 +11,12 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="lgoin" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/posts" element={<Form />} />
-        <Route path="/update/:postId" element={<Update />} />
-        <Route path="/posts/:postId" element={<PostDetail />} />   {/* 상세페이지 */}
+        <Route path="/" element={<Main />} />                   {/*메인 페이지*/}
+        <Route path="lgoin" element={<Login />} />              {/*로그인 페이지*/}
+        <Route path="/signup" element={<Signup />} />           {/*회원가입 페이지*/}
+        <Route path="/posts" element={<Form />} />              {/*게시글 작성 페이지*/}
+        <Route path="/update/:postId" element={<Update />} />   {/*게시글 수정 페이지*/}
+        <Route path="/posts/:postId" element={<PostDetail />} />{/*게시글 상세 페이지*/}
       </Routes>
     </BrowserRouter>
   );

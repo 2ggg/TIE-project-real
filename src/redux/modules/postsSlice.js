@@ -13,9 +13,7 @@ export const __getPosts = createAsyncThunk(
   "GET_POSTS",
   async (payload, thunkAPI) => {
     try {
-      console.log("겟받아오기");
       const response = await apis.get(`/main`);
-      console.log("겟 끝");
       console.log("__getPosts", response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch(error) {

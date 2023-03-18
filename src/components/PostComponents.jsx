@@ -1,9 +1,9 @@
 import React from 'react';
 import defaltImg from "../assets/image/defalt-img.jpg";
 
-function MainPostCard({img, title, nickname, createdAt}) {
+export function MainPostCard({img, title, nickname, createdAt}) {
   let alt = title;
-  if(img === null) {
+  if(img === "false") {
     img = defaltImg;
     alt = "defalt img";
   };
@@ -23,4 +23,16 @@ function MainPostCard({img, title, nickname, createdAt}) {
   );
 };
 
-export default MainPostCard;
+export function PostComment ({postId}) {
+  return (
+    <>
+      <div className="post-comment">
+        <span>
+          <label>닉네임 | 날짜</label>
+        </span>
+        <pre>댓글</pre>
+      </div>
+      <button>쓰레기통</button>
+    </>
+  );
+};
