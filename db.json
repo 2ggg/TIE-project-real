@@ -31,6 +31,30 @@
       "img": null,
       "createdAt" : "2023-03-17 19:22:22",
       "updatedAt": "2023-03-17 19:22:22"
+    },
+    {
+      "postId": 5,
+      "title":"게시글 제목5",
+      "nickname":"작성자 이름5",
+      "img": null,
+      "createdAt" : "2023-03-17 19:22:22",
+      "updatedAt": "2023-03-17 19:22:22"
+    },
+    {
+      "postId": 6,
+      "title":"게시글 제목6",
+      "nickname":"작성자 이름6",
+      "img": null,
+      "createdAt" : "2023-03-17 19:22:22",
+      "updatedAt": "2023-03-17 19:22:22"
+    },
+    {
+      "postId": 7,
+      "title":"게시글 제목7",
+      "nickname":"작성자 이름7",
+      "img": null,
+      "createdAt" : "2023-03-17 19:22:22",
+      "updatedAt": "2023-03-17 19:22:22"
     }
   ]
 }
