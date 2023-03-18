@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header'
 import MainPostCard from '../components/MainPostCard';
@@ -9,17 +10,22 @@ import { __getPosts } from '../redux/modules/postsSlice';
 function Main() {
   const dispatch = useDispatch();
 
-  const {isLoading, error, main} = useSelector((state) => {
+  const {isLoading, isError, error, main} = useSelector((state) => {
     return state.postsSlice;
   });
 
   useEffect(() => {
     dispatch(__getPosts());
-  }, []); //[] 안 넣어주면 영원히 무한로딩
+  }, []);
 
   if(isLoading) {
     return (
-      <div div style={{backgroundColor:"blue"}}>로딩중</div>
+      <div style={{backgroundColor:"blue"}}>로딩중</div>
+    );
+  };
+  if(isError) {
+    return (
+      <div style={{backgroundColor:"red"}}>{error}</div>
     );
   };
 
@@ -30,6 +36,7 @@ function Main() {
         {
           main.map((item) =>{
             return (
+              <Link to={`/posts/${item.postId}`}>
               <PostCard>
                 <MainPostCard
                   key={item.postId}
@@ -39,6 +46,7 @@ function Main() {
                   createdAt={item.createdAt}
                 />
               </PostCard>
+              </Link>
             )
           })
         }
@@ -51,37 +59,50 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  background-color: #F8F8F8;
 `;
 
 const PostCard = styled.div`
+  max-width: 150px;
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 10px;
   margin: 10px 0;
-  border-radius: 5px;
+
   background-color: #ffffff;
-  box-shadow: 0px 0px 5px #00000063;
+  /* box-shadow: 0px 0px 5px #00000063; */
+  border-radius: 5px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 10px;
   };
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    label{
+      font-size: 12px;
+      margin-top: 5px;
+      cursor: pointer;
+      &:nth-child(3n) {
+        font-size: 6px;
+        margin-top: 10px;
+      }
+    }
+  }
 
   h5 {
     font-size: 15px;
     font-weight: 700;
     margin-top: 5px;
-  };
-
-  label{
-    font-size: 12px;
-    margin-top: 5px;
-    &:nth-child(2n) {
-      font-size: 6px;
-      margin-top: 10px;
-    }
   };
 `;
 

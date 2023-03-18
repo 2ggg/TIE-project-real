@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { apis } from "../../shared/axios";
 
 const initialState = {
@@ -15,7 +14,7 @@ export const __getPosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log("겟받아오기");
-      const response = await axios.get(`http://localhost:3001/main`);
+      const response = await apis.get(`/main`);
       console.log("겟 끝");
       console.log("__getPosts", response.data);
       return thunkAPI.fulfillWithValue(response.data);

@@ -26,4 +26,16 @@ const Container = styled.div`
   height: 767px;
   background-color: #FFFF;
   margin : auto;
+  overflow: scroll;
+  &::-webkit-scrollbar
+  {
+    position: absolute;
+    right: 0;
+    width: 5px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: #c1c8cf;
+  }
+
 `;
