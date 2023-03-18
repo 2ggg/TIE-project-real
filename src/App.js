@@ -16,7 +16,7 @@ export default App;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: #C2DEFF;
   display: flex;
 `;
@@ -24,6 +24,6 @@ const Wrap = styled.div`
 const Container = styled.div`
   width: 375px;
   height: 767px;
-  background-color: white;
+  background-color: #F5F5F5;
   margin : auto;
 `;

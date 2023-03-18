@@ -12,15 +12,17 @@ export default Button;
 
 
 const StyledButton = styled.button`
-  /* cursor: pointer;
+  cursor: pointer;
+  background-color: #2975CC;
+  color: #FFFFFF;
   border: none;
   border-radius: 5px;
   position: relative;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
   :hover{
-    background-color: ${({ color }) => color};
-  } */
+    background-color: #2260A7;
+  }
 `;
 
 
