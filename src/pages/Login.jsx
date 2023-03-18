@@ -1,11 +1,14 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '../components/Button';
-import { LOGO } from '../components/Logo';
+import { Input } from '../components/Input';
+import Logo from '../components/Logo';
 import useInput from '../hooks/useInput';
 import { apis } from '../shared/axios';
 //로그인페이지
 function Login() {
-
+  const navigator = useNavigate()
   const [idValue, idHandler] = useInput('')
   const [pwValue, pwHandler] = useInput('')
 
@@ -24,14 +27,30 @@ function Login() {
 
   return (
     <>
-      <form onSubmit={loginHandler}>
-        <LOGO>TIE</LOGO>
-        <input value={idValue} onChange={idHandler} required />
-        <input value={pwValue} onChange={pwHandler} required />
-        <Button> 로그인 하기</Button>
-      </form>
+      <SubmitForm onSubmit={loginHandler}>
+        <Logo />
+        <Input value={idValue} onChange={idHandler} required width={'300px'} placeholder={'ID'} />
+        <Input value={pwValue} onChange={pwHandler} required width={'300px'} placeholder={'PassWord'} />
+        <StyledDiv onClick={() => navigator('/signup')}>회원가입🏋️‍♂️</StyledDiv>
+        <Button width={'300px'} height={'40px'}> 로그인</Button>
+      </SubmitForm>
     </>
   )
 }
 
 export default Login;
+
+
+const SubmitForm = styled.form`
+margin-top: 40%;
+  display: flex;
+  justify-content: center;
+  gap:40px;
+  flex-direction: column;
+  align-items: center;
+`
+
+const StyledDiv = styled.div`
+  cursor: pointer;  
+  font-weight:bolder;
+`

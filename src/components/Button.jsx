@@ -2,6 +2,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+
+
 function Button({ children, ...rest }) {
   return (
     <StyledButton {...rest}>{children}</StyledButton>
@@ -20,11 +22,11 @@ const StyledButton = styled.button`
   position: relative;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
-  :hover{
+
+
+
+  :active{
     background-color: #2260A7;
+
   }
 `;
-
-
-//외부컴포넌트.
-// {/* <Button onClick={() => DeleteButtonHandler(buy.id)} color={'#e41717'} >삭제</Button> */ }

@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './Button';
 import { cookies } from "../shared/cookie";
-import { LOGO } from './Logo';
+import Logo from './Logo';
 
-//*받은 쿠키값이 있으면 로그아웃, 없으면 로그인
+//*받은 쿠키에 토큰이 있으면 로그아웃, 없으면 로그인
 //*받은 쿠키값이 있으면 토큰 내부의 nick name 확인
 //*글 작성 이모티콘은 write:true false로 받아보자
 
@@ -16,10 +16,10 @@ function Header() {
   //*톸
   return (
     <HeaderContainer>
-      <DivContainer onClick={() => navigator('/')} cursor={'pointer'}><LOGO>TIE</LOGO></DivContainer>
+      <Logo>TIE</Logo>
       {/* !닉네임 조건필요 */}
-      <DivContainer><p>여기는 닉네임 넣을것</p></DivContainer>
-      <DivContainer onClick={() => navigator('/posts')} cursor={'pointer'}><p>작성</p></DivContainer>
+      <div><p>여기는 닉네임 넣을것</p></div>
+      <Button onClick={() => navigator('/posts')} >작성</Button>
       {/* !로그인 로그아웃 조건 필요 */}
       <Button onClick={() => navigator('/login')} height={'38px'} width={'60px'}>로그인</Button>
 
@@ -27,8 +27,6 @@ function Header() {
       <Button onClick={() => {
         cookies.remove("token")
         navigator('/')}} height={'38px'} width={'60px'}>로그아웃</Button> */}
-
-
     </HeaderContainer >
   );
 };
@@ -44,6 +42,3 @@ const HeaderContainer = styled.div`
   justify-content: space-evenly;
 `
 
-const DivContainer = styled.div`
-  cursor: ${({ cursor }) => cursor};
-`
