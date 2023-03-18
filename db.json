@@ -1,0 +1,36 @@
+{
+  "main":[
+    {
+    "postId": 1,
+    "title":"게시글 제목1",
+    "nickname":"작성자 이름1",
+    "img":null,
+    "createdAt" : "2023-03-17 19:22:22",
+    "updatedAt": "2023-03-17 19:22:22"
+    },
+    {
+    "postId": 2,
+    "title":"게시글 제목2",
+    "nickname":"작성자 이름2",
+    "img":null,
+    "createdAt" : "2023-03-17 19:22:22",
+    "updatedAt": "2023-03-17 19:22:22"
+    },
+    {
+    "postId": 3,
+    "title":"게시글 제목3",
+    "nickname":"작성자 이름3",
+    "img": null,
+    "createdAt" : "2023-03-17 19:22:22",
+    "updatedAt": "2023-03-17 19:22:22"
+    },
+    {
+      "postId": 4,
+      "title":"게시글 제목4",
+      "nickname":"작성자 이름4",
+      "img": null,
+      "createdAt" : "2023-03-17 19:22:22",
+      "updatedAt": "2023-03-17 19:22:22"
+    }
+  ]
+}
