@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const containerSize = { width: 375, height: 767 };
-const mainImg = { width: 130, heith: 100 };
+const mainPostImg = { width: 130, heith: 100 };
 
 //App
 export const Wrap = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-color: #c2deff;
   display: flex;
@@ -13,16 +13,19 @@ export const Wrap = styled.div`
 
 export const Container = styled.div`
   width: ${containerSize.width}px;
+  height: 100vh;
   min-width: ${containerSize.width}px;
-  height: ${containerSize.height}px;
-  background-color: #f8f8f8;
+  max-height: ${containerSize.height}px;
   margin: auto;
+  overflow: hidden;
+  background-color: #f8f8f8;
   overflow: scroll;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     position: absolute;
     right: 0;
-    width: 5px;
+    width: 3px;
     background-color: transparent;
   }
   &::-webkit-scrollbar-thumb {
@@ -42,7 +45,7 @@ export const MainContainer = styled.div`
 `;
 
 export const PostCard = styled.div`
-  max-width: ${mainImg.width}px;
+  max-width: ${mainPostImg.width}px;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -56,37 +59,37 @@ export const PostCard = styled.div`
   }
 
   img {
-    width: ${mainImg.width}px;
-    height: ${mainImg.heith}px;
+    width: ${mainPostImg.width}px;
+    height: ${mainPostImg.heith}px;
     object-fit: cover;
     border-radius: 10px;
   }
 
   div {
+    max-width: 150px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 150px;
     color: #28436e;
 
     label {
-      font-size: 12px;
       margin-top: 5px;
-      cursor: pointer;
+      font-size: 12px;
       color: #00000097;
+      cursor: pointer;
 
       :nth-child(3n) {
-        font-size: 6px;
         margin-top: 10px;
+        font-size: 6px;
       }
     }
   }
 
   h5 {
+    margin-top: 5px;
     font-size: 15px;
     font-weight: 700;
-    margin-top: 5px;
   }
 `;

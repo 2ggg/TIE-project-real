@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { TopBtn } from "../components/Button";
 import Header from "../components/Header";
 import { MainPostCard } from "../components/PostComponents";
 import { MainContainer, PostCard } from "../components/StyledComponents";
@@ -27,7 +28,8 @@ function Main() {
 
   return (
     <>
-      <Header />
+      <TopBtn/>
+      <Header/>
       <MainContainer>
         { main.map((item) => {
           return (

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { TopBtn } from "../components/Button";
 import Header from "../components/Header";
 import { PostComment } from "../components/PostComponents";
 import { MarginWrap } from "../components/StyledComponents";
@@ -28,6 +29,7 @@ function PostDetail() {
 
   return (
     <>
+      <TopBtn/>
       <Header />
       <MarginWrap>
         <PostContainer>
