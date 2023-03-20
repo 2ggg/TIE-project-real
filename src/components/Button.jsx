@@ -22,11 +22,7 @@ const StyledButton = styled.button`
   position: relative;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
-
-
-
   :active{
     background-color: #2260A7;
-
   }
 `;

@@ -16,7 +16,7 @@ const Router = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/posts" element={<Form />} />
         <Route path="/update/:postId" element={<Update />} />
-        <Route path="/posts/:postId" element={<PostDetail />} />   {/* 상세페이지 */}
+        <Route path="/posts/:postId" element={<PostDetail />} />
       </Routes>
     </BrowserRouter>
   );
