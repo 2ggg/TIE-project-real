@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+import React from 'react'
+import Header from '../components/Header'
+//상세페이지
+function PostDetail() {
+  return (
+    <>
+      <Header />
+      <p style={{ backgroundColor: '#7ff3b3' }}>상세페이지</p>
+    </>
+  )
+}
+=======
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
@@ -14,6 +27,7 @@ function PostDetail() {
     const commentResponse = await apis.get(`api/posts/${postId}/comments`);
     setComments(commentResponse.data.comments);
   };
+>>>>>>> 3309e3be4eb64f544c45af0db6c512775028cc7c
 
   useEffect(() => {
     fetchComment(postId);
