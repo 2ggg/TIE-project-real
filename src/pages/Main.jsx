@@ -27,6 +27,7 @@ function Main() {
 
   return (
     <>
+
       <Header />
       <MainContainer>
         {main.map((item) => {

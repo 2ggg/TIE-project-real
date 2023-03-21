@@ -12,7 +12,6 @@ function Button({ children, ...rest }) {
 
 export default Button;
 
-
 const StyledButton = styled.button`
   cursor: pointer;
   background-color: #2975CC;
