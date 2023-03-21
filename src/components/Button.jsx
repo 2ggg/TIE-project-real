@@ -1,6 +1,6 @@
 
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 import topBtnImg from '../assets/image/top-btn.svg';
 
 function Button({ children, ...rest }) {
@@ -12,30 +12,29 @@ function Button({ children, ...rest }) {
 export default Button;
 
 const StyledButton = styled.button`
-  /* cursor: pointer;
+  cursor: pointer;
+  background-color: #2975CC;
+  color: #FFFFFF;
   border: none;
   border-radius: 5px;
   position: relative;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
-  :hover{
-    background-color: ${({ color }) => color};
-  } */
+  :active{
+    background-color: #2260A7;
+  }
 `;
 
-
-//외부컴포넌트.
-// {/* <Button onClick={() => DeleteButtonHandler(buy.id)} color={'#e41717'} >삭제</Button> */ }
 
 export const TopBtn = () => {
   return (
     <>
-      <span id="top"/>
+      <span id="top" />
       <a href="#top">
-        <BtnSpan>
-          <img 
-          title='위로 가기' alt='위로 가기 버튼' src={topBtnImg} width="100" height="100"/>
-        </BtnSpan>
+        <TopBtnSpan>
+          <img
+            title='위로 가기' alt='위로 가기 버튼' src={topBtnImg} width="100" height="100" />
+        </TopBtnSpan>
       </a>
     </>
   );
@@ -48,7 +47,7 @@ const btnSize = {
   }
 };
 
-const BtnSpan = styled.div`
+const TopBtnSpan = styled.div`
   width: ${btnSize.topBtn.width}px;
   height: ${btnSize.topBtn.height}px;
   position: fixed;
