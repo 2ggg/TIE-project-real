@@ -18,27 +18,32 @@ function Signup() {
   const [checkId, setCheckId] = useState(true)
 
   //*정규식
-  const idCheck = /^[a-z0-9]+$/;
-  const pwCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
-  const nickNameCheck = /^[a-zA-Z가-힣0-9]{3,10}$/;
-
+  // 영문, 숫자 (한글,특수기호,공백 불가능) 3~12자리
+  const idCheck = /^[a-zA-Z0-9]{3,12}$/;
+  // 영문, 숫자 (한글,특수기호,공백 불가능) 8~30자리
+  const pwCheck = /^[a-zA-Z0-9]{8,30}$/;
+  //!영어 한글 숫자 2~10자리(특수문자 공백 불가능)
+  const nickNameCheck = /^[a-zA-Z가-힣0-9]{2,10}$/;
 
 
   //*회원가입
   const singnUpHandler = async (e) => {
     e.preventDefault()
-    if (userPW !== confirmPW) {
-      alert("비밀번호 같지 안너")
+    if (userPW !== confirmPW || !pwCheck.test(userPW)) {
+      alert("비밀번호를 확인하세요")
       return
     }
-    if (!pwCheck.test(userPW)) {
-      alert("정규식 x")
-      return
+    if (!nickNameCheck.test(nickName)) {
+      alert("닉네임을 확인하세요")
+    }
+    if (!nickNameCheck.test(nickName)) {
+      alert("닉네임을 확인하세요")
     }
     if (checkId) {
       alert("중복확인이 필요합니다.")
       return
     }
+
     const userInpo = {
       userId: userID,
       nickname: nickName,
@@ -47,14 +52,14 @@ function Signup() {
     }
     try {
       const result = await apis.post('/api/signup', userInpo)
-      console.log(result);
+      alert(`회원가입 성공!! ${nickName}님 안녕하세요`)
+      navigator("/");
     }
     catch (e) {
-      alert(e)
+      console.log(e);
     }
   }
-  // console.log(typeof (userID));
-  // console.log("userID", userID);
+
   //*아이디 중복확인
   const checkID = async () => {
     const checkinpo = {
@@ -64,10 +69,11 @@ function Signup() {
       const result = await apis.post('/api/signup/check', checkinpo)
       console.log("받은데이터", result.data);
       setCheckId(result.duplicationResult)
+
     }
     catch (e) {
-      console.error(e)
-      alert(e)
+      // console.error(e.response.data.errorMessage)
+      alert(e.response.data.errorMessage)
     }
   }
 
@@ -89,27 +95,34 @@ function Signup() {
       <BoxDiv>
         <div>
           <div style={{ display: 'inline-block' }}>
-            <Input value={userID} onChange={userIDHandler} width={'200px'} placeholder={'아이디입력'} required></Input>
+            <Input inputtype={'line'} value={userID} onChange={userIDHandler} width={'200px'} placeholder={'아이디입력'} required></Input>
           </div>
           <div style={{ display: 'inline-block' }} >
             <Button type={'button'} onClick={checkID}>중복확인</Button>
           </div>
-          {!userID ?
-            <StyledComentDiv color={'red'}>영소문자,숫자 3~12글자 사이.</StyledComentDiv > : !checkId ?
-              <StyledComentDiv color={'green'}>사용가능한 아이디입니다.</StyledComentDiv> :
-              <StyledComentDiv color={'red'}>아이디를 확인해 주세요</StyledComentDiv>
+          {
+            !userID ? <StyledComentDiv color={'red'}>영문, 숫자 (한글,특수기호,공백 불가능) 3~12자리</StyledComentDiv > :
+              !checkId ? <StyledComentDiv color={'green'}>사용가능한 아이디입니다.</StyledComentDiv> :
+                <StyledComentDiv color={'red'}>중복 확인을 해주세요</StyledComentDiv>
           }
         </div>
-
         <div>
-          <Input value={nickName} onChange={nickNameHandler} width={'250px'} placeholder={'닉네임입력'} required></Input>
-          {!nickName ? <StyledComentDiv color={'red'}>3~10글자 사이</StyledComentDiv> : true === nickNameCheck.test(nickName) ?
-            <StyledComentDiv color={'green'} >사용가능합니다</StyledComentDiv> :
-            <StyledComentDiv color={'red'}> 형식을 확인해 주세요</StyledComentDiv>
+          <Input inputtype={'line'} value={nickName} onChange={nickNameHandler} width={'250px'} placeholder={'닉네임입력'} required></Input>
+          {
+            !nickName ? <StyledComentDiv color={'red'}>한글, 영문, 숫자만 가능하며 2-10자리 가능.</StyledComentDiv> :
+              true === nickNameCheck.test(nickName) ? <StyledComentDiv color={'green'} >사용가능합니다</StyledComentDiv> :
+                <StyledComentDiv color={'red'}> 형식을 확인해 주세요</StyledComentDiv>
           }
         </div>
-        <Input type='password' value={userPW} onChange={userPWHandler} width={'250px'} placeholder={'비밀번호 입력'} required></Input>
-        <Input type='password' value={confirmPW} onChange={confirmPWHandler} width={'250px'} placeholder={'비밀번호 확인'} required></Input>
+        <div>
+          <Input inputtype={'line'} type='password' value={userPW} onChange={userPWHandler} width={'250px'} placeholder={'비밀번호 입력'} required></Input>
+          {
+            !userPW ? <StyledComentDiv color={'red'}> 영어 숫자 8~30자리(특수문자 공백 불가능)</StyledComentDiv> :
+              true === pwCheck.test(userPW) ? <StyledComentDiv color={'green'} >사용가능합니다</StyledComentDiv> :
+                <StyledComentDiv color={'red'}> 형식을 확인해 주세요</StyledComentDiv>
+          }
+        </div>
+        <Input inputtype={'line'} type='password' value={confirmPW} onChange={confirmPWHandler} width={'250px'} placeholder={'비밀번호 확인'} required></Input>
       </BoxDiv>
       <Button width={'300px'} height={'40px'}>회원가입</Button>
     </SubmitForm >

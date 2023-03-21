@@ -14,24 +14,33 @@ function Login() {
   const navigator = useNavigate()
   const [idValue, idHandler] = useInput('')
   const [pwValue, pwHandler] = useInput('')
+  const logindata = {
+    userId: idValue,
+    password: pwValue
+  }
+
 
   //*login POST
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
+
       const logindata = {
         userId: idValue,
         password: pwValue
       }
+
       const result = await apis.post('api/login', logindata)
       const payload = jwtDecode(result.data.token)
+      const nickname = payload.nickname
+
       cookies.set("token", result.data.token, { path: "/" })
-      cookies.set("nickname", payload.nickname, { path: "/" })
-      alert(result.data.message)
+      cookies.set("nickname", nickname, { path: "/" })
+      alert(`로그인성공!! ${nickname} 님 안녕하세요!`)
       navigator("/")
-      console.log("토큰값 까보기.", payload)
-    } catch (e) {
-      alert(e)
+    }
+    catch (e) {
+      alert(e.response.data.errorMessage)
     }
   }
 
@@ -47,8 +56,8 @@ function Login() {
     <>
       <SubmitForm onSubmit={loginHandler}>
         <Logo />
-        <Input value={idValue} onChange={idHandler} required width={'300px'} placeholder={'ID'} />
-        <Input value={pwValue} onChange={pwHandler} required width={'300px'} placeholder={'PassWord'} />
+        <Input inputtype={'line'} value={idValue} onChange={idHandler} required width={'300px'} placeholder={'ID'} />
+        <Input inputtype={'line'} value={pwValue} onChange={pwHandler} required width={'300px'} placeholder={'PassWord'} type={'password'} />
         <StyledDiv onClick={() => navigator('/signup')}>회원가입🏋️‍♂️</StyledDiv>
         <Button width={'300px'} height={'40px'}> 로그인</Button>
       </SubmitForm>

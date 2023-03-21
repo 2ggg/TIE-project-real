@@ -9,11 +9,6 @@ import Pencil from './pencil';
 
 
 
-
-//*받은 쿠키에 토큰이 있으면 로그아웃, 없으면 로그인
-//*받은 쿠키값이 있으면 토큰 내부의 nick name 확인
-//*글 작성 이모티콘은 write:true false로 받아보자
-
 function Header() {
   const navigator = useNavigate()
   const loaction = useLocation()
@@ -36,7 +31,7 @@ function Header() {
     <HeaderContainer>
       <Logo>TIE</Logo>
       {token ? <StyledDiv>{cookies.get("nickname")}님</StyledDiv> : <StyledDiv></StyledDiv>}
-      {'/posts' === loaction.pathname ? <SDiv /> : <Pencil onClick={() => navigator('/posts')} ></Pencil>}
+      {'/posts' === loaction.pathname ? <SDiv /> : <Pencil onClick={formHandler} ></Pencil>}
       {!token ? <Button onClick={logInHandler} height={'38px'} width={'60px'}>login</Button> :
         <Button onClick={logOutHandler} height={'38px'} width={'60px'}>logout</Button>}
     </HeaderContainer >
