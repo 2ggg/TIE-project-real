@@ -20,21 +20,39 @@ const INPUTSTYLE = {
     border-radius:5px;
     padding: 5px;
     
-  `
+  `,
+  commentBox: css`
+    width: 80%;
+    height: 50px;
+    border: 1px solid #505050;
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 15px 0;
+    resize: none;
+  `,
 }
-
-
-
+//input
 export const Input = ({ inputtype, ...rest }) => {
   const InputStyle = INPUTSTYLE[inputtype]
   return (
     <StyledInput InputStyle={InputStyle} {...rest}></StyledInput>
   )
 }
+//textarea
+export const Textarea = ({inputtype}) => {
+  const textareaStyle = INPUTSTYLE[inputtype];
+  return (
+    <StyledTextarea InputStyle={textareaStyle}/>
+  )
+}
+
 const StyledInput = styled.input`
   background-color: #F5F5F5;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
   ${(props) => (props.InputStyle)}
+`;
 
-`
+const StyledTextarea = styled.textarea`
+  ${(props) => (props.InputStyle)}
+`;
