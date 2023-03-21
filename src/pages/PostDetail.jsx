@@ -11,7 +11,7 @@ function PostDetail() {
   const postId = useParams().postId;
   const [comments, setComments] = useState([]);
   const fetchComment = async(postId) => {
-    const commentResponse = await apis.get(`/posts/${postId}/comments`);
+    const commentResponse = await apis.get(`api/posts/${postId}/comments`);
     setComments(commentResponse.data.comments);
   };
 
@@ -33,7 +33,6 @@ function PostDetail() {
           {noComment(comments)}
           <ul>
             {comments?.map((item) => {
-              console.log(item);
               return (
                 <li key={item.commentId}>
                   <PostCommentContainer>
@@ -52,7 +51,7 @@ function PostDetail() {
 export default PostDetail;
 
 const noComment = (comments) => {
-  if(comments.length == 0){
+  if(comments.length === 0){
     return <NoComment>댓글이 없습니다.</NoComment>
   }
 };

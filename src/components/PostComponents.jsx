@@ -50,7 +50,7 @@ export const PostComponent = ({postId}) => {
   };
 
   const fetchPost = async(postId) => {
-    const postResponse = await apis.get(`/posts/${postId}`);
+    const postResponse = await apis.get(`api/posts/${postId}`);
     setOnePost(postResponse.data.post);
     setUpdateResult(postResponse.data.isUpdate);
   };
