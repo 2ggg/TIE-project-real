@@ -27,10 +27,9 @@ function Main() {
 
   return (
     <>
-
-      <Header />
+      <Header/>
       <MainContainer>
-        {main.map((item) => {
+        { main.map((item) => {
           return (
             <Link to={`/posts/${item.postId}`} key={item.postId}>
               <PostCard>
