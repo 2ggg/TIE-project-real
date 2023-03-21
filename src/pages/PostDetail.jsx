@@ -9,7 +9,7 @@ import { PostCommentComponent, PostComponent } from "../components/PostComponent
 //상세페이지
 function PostDetail() {
   const postId = useParams().postId;
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([]);
   const fetchComment = async(postId) => {
     const commentResponse = await apis.get(`/posts/${postId}/comments`);
     setComments(commentResponse.data.comments);
@@ -18,10 +18,6 @@ function PostDetail() {
   useEffect(() => {
     fetchComment(postId);
   }, [JSON.stringify(comments)]);
-
-  //한페이지에서만, 한 컴포넌트에서만 보는 건 굳이 리덕스x
-  //리덕스쿼리 = 임시 저장 데이터
-  //전역 : 유저정보
 
   return (
     <>
@@ -34,6 +30,7 @@ function PostDetail() {
 
         {/* 댓글 */}
         <PostCommentWrap>
+          {noComment(comments)}
           <ul>
             {comments?.map((item) => {
               console.log(item);
@@ -50,9 +47,24 @@ function PostDetail() {
       </PostWrap>
     </>
   );
-}
+};
 
 export default PostDetail;
+
+const noComment = (comments) => {
+  if(comments.length == 0){
+    return <NoComment>댓글이 없습니다.</NoComment>
+  }
+};
+
+const NoComment = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid #3d3d3d;
+  background-color: #c7c7c7;
+`;
 
 const PostWrap = styled.div`
   margin: 20px;
@@ -91,9 +103,7 @@ const PostContainer = styled.div`
   }
 `;
 
-const PostCommentWrap = styled.div`
-  
-`;
+const PostCommentWrap = styled.div``;
 
 const PostCommentContainer = styled.div`
   width: 100%;
@@ -102,7 +112,6 @@ const PostCommentContainer = styled.div`
   align-items: center;
   background-color: #ffffff;
   border-top: 2px solid black;
-  
 
   .post-comment {
     width: 100%;

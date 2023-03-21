@@ -11,7 +11,6 @@ function Button({ children, ...rest }) {
 
 export default Button;
 
-
 const StyledButton = styled.button`
   /* cursor: pointer;
   border: none;
