@@ -40,8 +40,12 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-a{
+a {
 	color: #000000;
 	text-decoration: none;
 	outline: none;
+}
+pre {
+	white-space: pre-wrap;
+	word-break: break-all;
 }

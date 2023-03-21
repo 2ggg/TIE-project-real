@@ -1,97 +1,124 @@
-import React from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { TopBtn } from "../components/Button";
-import Header from "../components/Header";
-import { PostComment } from "../components/PostComponents";
-import { MarginWrap } from "../components/StyledComponents";
 import { apis } from "../shared/axios";
+import Header from "../components/Header";
+import { PostCommentComponent, PostComponent } from "../components/PostComponents";
 
 //상세페이지
 function PostDetail() {
-  const params = useParams();
-
-  const fetchPost = async() => {
-    const {postResponse} = await apis.get(`/posts/${params.postId}`);
-    console.log(postResponse.data);
-  };
-
-  const fetchComment = async() => {
-    const {commentResponse} = await apis.get(`/posts/${params.postId}/comments`);
-    console.log(commentResponse.data);
+  const postId = useParams().postId;
+  const [comments, setComments] = useState(null);
+  const fetchComment = async(postId) => {
+    const commentResponse = await apis.get(`/posts/${postId}/comments`);
+    setComments(commentResponse.data.comments);
   };
 
   useEffect(() => {
-    // fetchPost();
-    // fetchComment();
-  }, []);
+    fetchComment(postId);
+  }, [JSON.stringify(comments)]);
+
+  //한페이지에서만, 한 컴포넌트에서만 보는 건 굳이 리덕스x
+  //리덕스쿼리 = 임시 저장 데이터
+  //전역 : 유저정보
 
   return (
     <>
-      <TopBtn/>
-      <Header />
-      <MarginWrap>
+      <Header/>
+      <PostWrap>
+        {/* 게시글 */}
         <PostContainer>
-          <div>postId:{params.postId}</div>
-          <h2>제목</h2>
-          <div>
-            <span>
-              <label>닉네임</label>|<label>날짜</label>
-            </span>
-            <span>
-              <button>연필</button>
-              <button>쓰레기통</button>
-            </span>
-          </div>
-          {/* imgResult(img, title) */}
-          <pre>내용내용내용</pre>
+          <PostComponent postId={postId}/>
         </PostContainer>
+
         {/* 댓글 */}
-        <ul>
-          <li>
-            <PostCommentContainer>
-              <PostComment postId={params.postId}/>
-            </PostCommentContainer>
-          </li>
-          <li>
-            <PostCommentContainer>
-              {/* <PostComment postId={params.postId}/> */}
-              <div className="post-comment">
-                <span>
-                  <label>닉네임 | 날짜</label>
-                </span>
-                <pre>댓글</pre>
-              </div>
-              <button>쓰레기통</button>
-            </PostCommentContainer>
-          </li>
-        </ul>
-      </MarginWrap>
+        <PostCommentWrap>
+          <ul>
+            {comments?.map((item) => {
+              console.log(item);
+              return (
+                <li key={item.commentId}>
+                  <PostCommentContainer>
+                    <PostCommentComponent postId={postId} comment={item}/>
+                  </PostCommentContainer>
+                </li>
+              );
+            })}
+          </ul>
+        </PostCommentWrap>
+      </PostWrap>
     </>
   );
 }
+
 export default PostDetail;
 
-//img 있는지 없는지 확인 후 있으면 이미지 추가, 없으면 아무것도 없음
-const imgResult = (img, title) => {
-  return img !== "false" && <img src={img} alt={title} />;
-};
+const PostWrap = styled.div`
+  margin: 20px;
+  pre {
+    font-size: 15px;
+  }
+`;
 
 const PostContainer = styled.div`
-  background-color: #eefbff;
+  margin-bottom: 10px;
+  font-size: 15px;
+
+  h1 {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  label {
+    font-size: 10px;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    label {
+      font-size: 12px;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+`;
+
+const PostCommentWrap = styled.div`
+  
 `;
 
 const PostCommentContainer = styled.div`
-  background-color: #dbdfe484;
-  border-top: 2px solid black;
-  padding: 10px;
+  width: 100%;
+  max-width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  background-color: #ffffff;
+  border-top: 2px solid black;
+  
 
   .post-comment {
-    min-height: 50px;
+    width: 100%;
+    margin: 10px;
+    .space-between {
+      display: flex;
+      justify-content: space-between;
+      .column {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  .nickname {
+    font-size: 14px;
   }
 
   label {
@@ -99,12 +126,10 @@ const PostCommentContainer = styled.div`
   }
 
   pre {
-    font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     margin-top: 5px;
-  }
-
-  button {
-    margin-right: 10px;
+    font-size: 15px;
+    white-space: pre-wrap;
+    word-break: break-all;
   }
 `;

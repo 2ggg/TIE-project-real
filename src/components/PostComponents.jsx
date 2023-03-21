@@ -1,19 +1,16 @@
-import React from 'react';
-import defaltImg from "../assets/image/defalt-img.jpg";
+import React, { useEffect, useState } from 'react';
+import { apis } from '../shared/axios';
+import { InputImgComponent } from './InputComponent';
 
 export function MainPostCard({img, title, nickname, createdAt}) {
   let alt = title;
-  if(img === "false") {
-    img = defaltImg;
-    alt = "defalt img";
-  };
 
   let arr = createdAt.split(' ');
   createdAt = arr[0];
 
   return (
     <>
-      <img src={img} alt={alt} />
+      <InputImgComponent img={img} alt={alt}/>
       <div>
         <h5>{title}</h5>
         <label>{nickname}</label>
@@ -23,16 +20,65 @@ export function MainPostCard({img, title, nickname, createdAt}) {
   );
 };
 
-export function PostComment ({postId}) {
+export const PostCommentComponent = ({postId, comment}) => {
+
   return (
     <>
       <div className="post-comment">
-        <span>
-          <label>닉네임 | 날짜</label>
-        </span>
-        <pre>댓글</pre>
+        <div className="space-between">
+          <span className="column">
+            <label>{comment.nickname}</label>
+            <label>{comment.createdAt}</label>
+          </span>
+          <button>쓰</button>
+        </div>
+        <pre>{comment.comment}</pre>
       </div>
-      <button>쓰레기통</button>
     </>
   );
 };
+
+export const PostComponent = ({postId}) => {
+  const [onePost, setOnePost] = useState(null);
+  const [updateResult, setUpdateResult] = useState(false);
+  const imgResult = (onePost) => {//img 있는지 없는지 확인 후 있으면 이미지 추가, 없으면 아무것도 없음
+    return onePost?.img !== "false" && <InputImgComponent img={onePost?.img} alt={onePost?.title}/>;
+  };
+
+  const isUpdated = (updateResult) => {
+    return updateResult === true && <label>수정됨</label>;
+  };
+
+  const fetchPost = async(postId) => {
+    const postResponse = await apis.get(`/posts/${postId}`);
+    setOnePost(postResponse.data.post);
+    setUpdateResult(postResponse.data.isUpdate);
+  };
+
+  useEffect(() => {
+    fetchPost(postId);
+  }, [JSON.stringify(onePost)]);
+
+  return (
+    <>
+      <h1>{onePost?.title}</h1>
+          <div>
+            <label>{onePost?.nickname}</label>
+            <span>
+              <button>연필</button>
+              <button>쓰</button>
+            </span>
+          </div>
+          <span>
+            <label>{onePost?.createdAt}</label>
+            {" "}
+            {isUpdated(updateResult)}
+          </span>
+          {imgResult(onePost)}
+          <pre>{onePost?.content}</pre>
+    </>
+  );
+}
+
+
+

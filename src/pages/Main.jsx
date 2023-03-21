@@ -33,10 +33,9 @@ function Main() {
       <MainContainer>
         { main.map((item) => {
           return (
-            <Link to={`/posts/${item.postId}`}>
+            <Link to={`/posts/${item.postId}`} key={item.postId}>
               <PostCard>
                 <MainPostCard
-                  key={item.postId}
                   img={item.img}
                   title={item.title}
                   nickname={item.nickname}

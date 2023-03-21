@@ -34,7 +34,8 @@ export const TopBtn = () => {
       <span id="top"/>
       <a href="#top">
         <BtnSpan>
-          <img title='위로 가기' alt='위로 가기 버튼' src={topBtnImg} width="100" height="100"/>
+          <img 
+          title='위로 가기' alt='위로 가기 버튼' src={topBtnImg} width="100" height="100"/>
         </BtnSpan>
       </a>
     </>

@@ -33,10 +33,6 @@ export const Container = styled.div`
   }
 `;
 
-export const MarginWrap = styled.div`
-  margin: 20px;
-`;
-
 //Main
 export const MainContainer = styled.div`
   display: flex;
