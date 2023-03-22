@@ -40,12 +40,10 @@ function Form() {
           "Content-type": "multipart/form-data"
         }
       })
-      console.log(result.data.message);
       alert('게시글 작성완료')
       navigator("/")
     } catch (e) {
-      console.log(e);
-      alert(e.response.data.errorMessage)
+      alert(e.response.data.errorMessage);
     }
   }
 
@@ -63,7 +61,6 @@ function Form() {
     }
   }
 
-
   return (
     <div >
       <Header />
@@ -77,8 +74,6 @@ function Form() {
     </div>
   )
 }
-
-export default Form;
 
 const StyledForm = styled.form`
   margin: 50px 0px;
@@ -94,3 +89,5 @@ const StyledImg = styled.img`
   width: 300px;
   border-radius: 10px;
 `
+
+export default Form;

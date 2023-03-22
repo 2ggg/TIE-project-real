@@ -11,7 +11,7 @@ import { apis } from '../shared/axios';
 import { cookies } from '../shared/cookie';
 //수정
 function Update() {
-  const { isLoading, isError, error, main } = useSelector((state) => {
+  const { isLoading, isError, error, posts } = useSelector((state) => {
     return state.postsSlice;
   });
   const token = cookies.get("token");
@@ -19,7 +19,7 @@ function Update() {
   const navigator = useNavigate();
   const param = useParams();
   const id = param.postId
-  const foudData = main.find((data) => data.postId == param.postId)
+  const foudData = posts.find((data) => data.postId == param.postId)
   const foundimg = `${process.env.REACT_APP_IMAGE_URL}` + foudData.img
   const [title, titleHandler] = useInput(foudData.title)
   const [content, contenthandler] = useInput(foudData.content)

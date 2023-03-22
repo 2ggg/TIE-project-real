@@ -45,7 +45,11 @@ const btnSize = {
   topBtn: {
     width: 50,
     height: 50,
-  }
+  },
+  postBtn: {
+    width: 30,
+    height: 30,
+  },
 };
 
 const TopBtnSpan = styled.div`

@@ -2,56 +2,82 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { apis } from "../shared/axios";
 import Header from "../components/Header";
 import { PostCommentComponent, PostComponent } from "../components/PostComponents";
+import { addComment, fetchComment } from "../utils/commentUtils";
+import { Textarea } from "../components/Input";
+import { useInputValue } from "../hooks/useInput";
+import Button from "../components/Button";
+
 //상세페이지
 function PostDetail() {
   const postId = useParams().postId;
   const [comments, setComments] = useState([]);
-  const fetchComment = async (postId) => {
-    const commentResponse = await apis.get(`api/posts/${postId}/comments`);
-    setComments(commentResponse.data.comments);
+  const [value, setValue, valueHandler] = useInputValue('');
+
+  //댓글 없을때
+  const isNoComment = (comments) => {
+    if (comments.length === 0) {
+      return <NoComment>댓글이 없습니다.</NoComment>
+    }
   };
+  //댓글 추가
+  const addOneComment = () => {
+    addComment({ postId, value, comments, setComments });
+    setValue('');
+    console.log("setvalue");
+  }
+
   useEffect(() => {
-    fetchComment(postId);
+    fetchComment(postId, setComments);
   }, [JSON.stringify(comments)]);
 
   return (
     <>
       <Header />
       <PostWrap>
+
         {/* 게시글 */}
         <PostContainer>
           <PostComponent postId={postId} />
         </PostContainer>
         {/* 댓글 */}
-        <PostCommentWrap>ㅈ
-          {noComment(comments)}
+        <PostCommentWrap>
+          {isNoComment(comments)}
           <ul>
             {comments?.map((item) => {
               return (
                 <li key={item.commentId}>
                   <PostCommentContainer>
-                    <PostCommentComponent postId={postId} comment={item} />
+                    <PostCommentComponent
+                      postId={postId}
+                      userId={item.userId}
+                      comment={item}
+                      comments={comments}
+                      commentId={item.commentId}
+                      setComments={setComments}
+                    />
                   </PostCommentContainer>
                 </li>
               );
             })}
           </ul>
         </PostCommentWrap>
+
+        {/* <form action=""> */}
+        <WriteComment>
+          <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value} />
+          <Button onClick={addOneComment}>
+            작성
+          </Button>
+        </WriteComment>
+        {/* </form> */}
       </PostWrap>
     </>
   );
 };
 
 export default PostDetail;
-
-const noComment = (comments) => {
-  if (comments.length === 0) {
-    return <NoComment>댓글이 없습니다.</NoComment>
-  }
-};
 
 const NoComment = styled.div`
   height: 50px;
@@ -97,6 +123,10 @@ const PostContainer = styled.div`
     border-radius: 5px;
     margin: 10px 0;
   }
+
+  button {
+    margin-left: 5px;
+  }
 `;
 
 const PostCommentWrap = styled.div``;
@@ -137,4 +167,10 @@ const PostCommentContainer = styled.div`
     white-space: pre-wrap;
     word-break: break-all;
   }
+`;
+
+const WriteComment = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

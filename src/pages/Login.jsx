@@ -9,7 +9,6 @@ import useInput from '../hooks/useInput';
 import { apis } from '../shared/axios';
 import { cookies } from '../shared/cookie';
 
-
 function Login() {
   const navigator = useNavigate()
   const [idValue, idHandler] = useInput('')
@@ -18,7 +17,6 @@ function Login() {
     userId: idValue,
     password: pwValue
   }
-
 
   //*login POST
   const loginHandler = async (e) => {
@@ -64,7 +62,6 @@ function Login() {
 }
 
 export default Login;
-
 
 const SubmitForm = styled.form`
 margin-top: 40%;

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 const Logo = () => {
   const navigator = useNavigate()
   return (
@@ -10,7 +9,6 @@ const Logo = () => {
     </DivContainer>
   )
 }
-
 
 const StyledLOGO = styled.p`
   font-family: VariableFont_YEAR;
@@ -21,5 +19,4 @@ const DivContainer = styled.div`
   cursor: pointer
 `
 
-
-export default Logo
+export default Logo;

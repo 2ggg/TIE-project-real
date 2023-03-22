@@ -8,8 +8,12 @@ const useInput = (inputValue) => {
   return [value, Handler];
 }
 
+export const useInputValue = (inputValue) => {
+  const [value, setValue] = useState(inputValue);
+  const Handler = (e) => {
+    setValue(e.target.value);
+  }
+  return [value, setValue, Handler];
+}
+
 export default useInput;
-
-
-
-

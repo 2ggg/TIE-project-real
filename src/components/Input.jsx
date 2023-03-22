@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import styled, { css } from 'styled-components'
 
-
 const INPUTSTYLE = {
   line: css`
     :focus{
@@ -20,10 +19,25 @@ const INPUTSTYLE = {
     border: 1px solid white;
     border-radius:5px;
     padding: 5px;
-  `
+  `,
+  commentBox: css`
+    width: 80%;
+    height: 50px;
+    border: 1px solid #505050;
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 15px 0;
+    resize: none;
+  `,
 }
 
-
+//textarea
+export const Textarea = ({ inputtype, onChange, value }) => {
+  const textareaStyle = INPUTSTYLE[inputtype];
+  return (
+    <StyledTextareaComment InputStyle={textareaStyle} onChange={onChange} value={value} required />
+  )
+}
 
 export const Input = ({ texttype, inputtype, ...rest }) => {
   const InputStyle = INPUTSTYLE[inputtype]
@@ -34,8 +48,6 @@ export const Input = ({ texttype, inputtype, ...rest }) => {
     </>
   )
 }
-
-
 
 const StyledInput = styled.input`
   background-color: #F5F5F5;
@@ -57,3 +69,7 @@ const StyledTextarea = styled.textarea`
   padding: 10px;
   margin: 5px;
 `
+
+const StyledTextareaComment = styled.textarea`
+  ${(props) => (props.InputStyle)}
+`;

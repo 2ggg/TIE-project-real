@@ -1,14 +1,19 @@
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router';
-import { apis } from '../shared/axios';
+import { useDispatch } from 'react-redux';
 import { cookies } from '../shared/cookie';
+import { useNavigate } from 'react-router';
+import { __deletePost } from '../redux/modules/postsSlice';
+import { deleteComment } from '../utils/commentUtils';
+import { fetchPost, imgResult, isUpdated } from '../utils/postUtils';
+import { Authentication } from './Authentication';
+import Button from './Button';
 import { InputImgComponent } from './InputComponent';
 
+/*메인페이지 post cardbox*/
 export function MainPostCard({ img, title, nickname, createdAt }) {
   let alt = title;
-
   let arr = createdAt.split(' ');
   createdAt = arr[0];
 
@@ -24,71 +29,51 @@ export function MainPostCard({ img, title, nickname, createdAt }) {
   );
 };
 
-export const PostCommentComponent = ({ postId, comment }) => {
-
-  return (
-    <>
-      <div className="post-comment">
-        <div className="space-between">
-          <span className="column">
-            <label>{comment.nickname}</label>
-            <label>{comment.createdAt}</label>
-          </span>
-          <button>쓰</button>
-        </div>
-        <pre>{comment.comment}</pre>
-      </div>
-    </>
-  );
-};
-
+/*게시물*/
 export const PostComponent = ({ postId }) => {
-  const navigator = useNavigate();
-  const token = cookies.get("token");
-  const tokenuserId = jwtDecode(token).userId;
-  const { main } = useSelector((state) => {
+  const { posts } = useSelector((state) => {
     return state.postsSlice;
   });
-  const foudData = main.find((data) => data.postId == postId)
+  const foudData = posts.find((data) => data.postId == postId)
   const [onePost, setOnePost] = useState(null);
   const [updateResult, setUpdateResult] = useState(false);
-  const imgResult = (onePost) => {//img 있는지 없는지 확인 후 있으면 이미지 추가, 없으면 아무것도 없음
-    return onePost?.img !== "false" && <InputImgComponent img={onePost?.img} alt={onePost?.title} />;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = cookies.get("token");
+  let tokenuserId = '';
+  if (token) {
+    tokenuserId = jwtDecode(token).userId;
+  }
+
+  const deletePost = () => {
+    dispatch(__deletePost({ postId, posts }));
+    alert("게시글이 삭제되었습니다.");
+    navigate('/');
   };
 
-  const isUpdated = (updateResult) => {
-    return updateResult === true && <label>수정됨</label>;
-  };
-
-  const fetchPost = async (postId) => {
-    const postResponse = await apis.get(`api/posts/${postId}`);
-    setOnePost(postResponse.data.post);
-    setUpdateResult(postResponse.data.isUpdate);
-  };
-
+  useEffect(() => {
+    fetchPost({ postId, setOnePost, setUpdateResult });
+  }, []);
 
   const goDetail = () => {
     if (tokenuserId !== foudData.userId) {
       alert("접근 권한이 없습니다.")
       return
     }
-    navigator(`/update/${postId}`)
+    navigate(`/update/${postId}`)
   }
-  useEffect(() => {
-    fetchPost(postId);
-  }, [JSON.stringify(onePost)]);
-
-
 
   return (
     <>
       <h1>{onePost?.title}</h1>
       <div>
         <label>{onePost?.nickname}</label>
-        <span>
-          <button onClick={goDetail}>연필</button>
-          <button>쓰</button>
-        </span>
+        <Authentication targetUserId={onePost?.userId}>
+          <span>
+            <Button onClick={goDetail}>수정</Button>
+            <Button onClick={deletePost}>삭제</Button>
+          </span>
+        </Authentication>
       </div>
       <span>
         <label>{onePost?.createdAt}</label>
@@ -99,7 +84,27 @@ export const PostComponent = ({ postId }) => {
       <pre>{onePost?.content}</pre>
     </>
   );
+};
+
+/*댓글*/
+export const PostCommentComponent = ({ postId, userId, comment, comments, commentId, setComments }) => {
+  return (
+    <>
+      <div className="post-comment">
+        <div className="space-between">
+          <span className="column">
+            <label>{comment.nickname}</label>
+            <label>{comment.createdAt}</label>
+          </span>
+          {/* 댓글 삭제 버튼 */}
+          <Authentication targetUserId={userId}>
+            <Button onClick={() => deleteComment({ postId, commentId, comments, setComments })}>
+              삭제
+            </Button>
+          </Authentication>
+        </div>
+        <pre>{comment.comment}</pre>
+      </div>
+    </>
+  );
 }
-
-
-
