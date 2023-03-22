@@ -5,6 +5,7 @@ import { __deletePost } from '../redux/modules/postsSlice';
 import { deleteComment } from '../utils/commentUtils';
 import { fetchPost, imgResult, isUpdated } from '../utils/postUtils';
 import { Authentication } from './Authentication';
+import Button from './Button';
 import { InputImgComponent } from './InputComponent';
 
 /*메인페이지 post cardbox*/
@@ -47,8 +48,8 @@ export const PostComponent = ({postId}) => {
         <label>{onePost?.nickname}</label>
         <Authentication targetUserId={onePost?.userId}>
           <span>
-            <button>수정</button>
-            <button onClick={deletePost}>삭제</button>
+            <Button>수정</Button>
+            <Button onClick={deletePost}>삭제</Button>
           </span>
         </Authentication>
       </div>
@@ -75,9 +76,9 @@ export const PostCommentComponent = ({postId, userId, comment, comments, comment
           </span>
           {/* 댓글 삭제 버튼 */}
           <Authentication targetUserId={userId}>
-            <button onClick={() => deleteComment({postId, commentId, comments, setComments})}>
+            <Button onClick={() => deleteComment({postId, commentId, comments, setComments})}>
               삭제
-            </button>
+            </Button>
           </Authentication>
         </div>
         <pre>{comment.comment}</pre>

@@ -18,31 +18,35 @@ export const fetchComment = async(postId, setComments) => {
 export const addComment = async({postId, value, comments, setComments}) => {
   const [token, tokenPayload] = getToken();
   const comment = {comment: value};
-  try {
-    const commentResponse = await apis.post(`api/posts/${postId}/comments`, comment, {
-      headers: {authorization: `Bearer ${token}`},
-    });
-    console.log("response", commentResponse);
-    console.log("createComment", commentResponse.data.createComment);
-    setComments([...comments, commentResponse.data.createComment]);
-    alert(commentResponse.data.message);
-  } catch(error) {
-    alert(error.response.data.errorMessage);
+  if(token) {
+    try {
+      const commentResponse = await apis.post(`api/posts/${postId}/comments`, comment, {
+        headers: {authorization: `Bearer ${token}`},
+      });
+      console.log("response", commentResponse);
+      console.log("createComment", commentResponse.data.createComment);
+      setComments([...comments, commentResponse.data.createComment]);
+      alert(commentResponse.data.message);
+    } catch(error) {
+      alert(error.response.data.errorMessage);
+    }
   }
 };
 
 //댓글 삭제하기
 export const deleteComment = async({postId, commentId, comments, setComments}) => {
   const [token, tokenPayload] = getToken();
-  if(window.confirm("댓글을 삭제하시겠습니까?")){
-    try {
-      await apis.delete(`api/posts/${postId}/comments/${commentId}`, {
-        headers: {authorization: `Bearer ${token}`}
-      });
-      alert("삭제되었습니다.");
-      setComments(comments.filter((item) => item.commentId !== commentId));
-    } catch(error) {
-      alert(error.response.data.errorMessage);
+  if(token) {
+    if(window.confirm("댓글을 삭제하시겠습니까?")){
+      try {
+        await apis.delete(`api/posts/${postId}/comments/${commentId}`, {
+          headers: {authorization: `Bearer ${token}`}
+        });
+        alert("삭제되었습니다.");
+        setComments(comments.filter((item) => item.commentId !== commentId));
+      } catch(error) {
+        alert(error.response.data.errorMessage);
+      }
     }
   }
 };

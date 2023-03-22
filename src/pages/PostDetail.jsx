@@ -8,6 +8,7 @@ import { addComment, fetchComment } from "../utils/commentUtils";
 import { Textarea } from "../components/Input";
 import { useInputValue } from "../hooks/useInput";
 import { getToken } from "../hooks/getToken";
+import Button from "../components/Button";
 
 //상세페이지
 function PostDetail() {
@@ -37,7 +38,7 @@ function PostDetail() {
     <>
       <Header/>
       <PostWrap>
-        <form action=""></form>
+        
         {/* 게시글 */}
         <PostContainer>
           <PostComponent postId={postId}/>
@@ -65,12 +66,15 @@ function PostDetail() {
             })}
           </ul>
         </PostCommentWrap>
+
+        {/* <form action=""> */}
         <WriteComment>
-          <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value}/>
-          <button onClick={addOneComment}>
-            작성
-          </button>
+            <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value}/>
+            <Button onClick={addOneComment}>
+              작성
+            </Button>
         </WriteComment>
+        {/* </form> */}
       </PostWrap>
     </>
   );
@@ -121,6 +125,10 @@ const PostContainer = styled.div`
     height: auto;
     border-radius: 5px;
     margin: 10px 0;
+  }
+
+  button {
+    margin-left: 5px;
   }
 `;
 
