@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { PostCommentComponent, PostComponent } from "../components/PostComponents";
 import { addComment, fetchComment } from "../utils/commentUtils";
-import { Textarea } from "../components/Input";
+import { Input, Textarea } from "../components/Input";
 import { useInputValue } from "../hooks/useInput";
 import Button from "../components/Button";
 import { cookies } from '../shared/cookie';
@@ -24,7 +24,8 @@ function PostDetail() {
     }
   };
   //댓글 추가
-  const addOneComment = () => {
+  const addOneComment = (e) => {
+    e.preventDefault();
     if (token) {
       addComment({ postId, value, comments, setComments });
       setValue('');
@@ -68,14 +69,14 @@ function PostDetail() {
             })}
           </ul>
         </PostCommentWrap>
-        {/* <form action=""> */}
-        <WriteComment>
-          <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value} />
-          <Button onClick={addOneComment}>
-            작성
-          </Button>
-        </WriteComment>
-        {/* </form> */}
+        <form onSubmit={addOneComment}>
+          <WriteComment>
+            <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value} />
+            <Button type={"submit"}>
+              작성
+            </Button>
+          </WriteComment>
+        </form>
       </PostWrap>
     </>
   );

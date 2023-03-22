@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 const INPUTSTYLE = {
   line: css`
@@ -32,7 +31,7 @@ const INPUTSTYLE = {
 }
 
 //textarea
-export const Textarea = ({ inputtype, onChange, value }) => {
+export const Textarea = ({ inputtype, onChange, value, }) => {
   const textareaStyle = INPUTSTYLE[inputtype];
   return (
     <StyledTextareaComment InputStyle={textareaStyle} onChange={onChange} value={value} required />
