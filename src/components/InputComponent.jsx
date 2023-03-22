@@ -1,7 +1,8 @@
 import defaltImg from "../assets/image/defalt-img.jpg";
 
-export const InputImgComponent = ({img, alt}) => {
-  if(img === "false") {
+export const InputImgComponent = ({ img, alt }) => {
+
+  if (img === "false" || !img) {
     img = defaltImg;
     alt = "defalt img";
   } else {
@@ -13,6 +14,6 @@ export const InputImgComponent = ({img, alt}) => {
   }
 
   return (
-    <img src={img} alt={alt} onError={handleImgError}/>
+    <img src={img} alt={alt} onError={handleImgError} />
   )
 };

@@ -3,7 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 import topBtnImg from '../assets/image/top-btn.svg';
 
-
 function Button({ children, ...rest }) {
   return (
     <StyledButton {...rest}>{children}</StyledButton>
@@ -25,7 +24,6 @@ const StyledButton = styled.button`
     background-color: #2260A7;
   }
 `;
-
 
 export const TopBtn = () => {
   return (

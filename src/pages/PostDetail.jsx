@@ -18,7 +18,7 @@ function PostDetail() {
   //댓글 없을때
   const isNoComment = (comments) => {
     if (comments.length === 0) {
-      return <NoComment>댓글이 없습니다.</NoComment>
+      return <NoComment>아직 댓글이 없습니다.</NoComment>
     }
   };
   //댓글 추가

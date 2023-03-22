@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 const Pencil = ({ ...rest }) => {
 
   return (
