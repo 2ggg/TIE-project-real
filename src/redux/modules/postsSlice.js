@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getToken } from "../../hooks/getToken";
 import { apis } from "../../shared/axios";
 
 const initialState = {
@@ -14,7 +15,7 @@ export const __getPosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await apis.get(`api/posts`);
-      console.log("__getPosts", response.data);
+      console.log('response',response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch(error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -26,14 +27,22 @@ export const __getPosts = createAsyncThunk(
 export const __deletePost = createAsyncThunk(
   "DELETE_POST",
   async(payload, thunkAPI) => {
-    try {
-      const response = await apis.delete(`/api/posts/${payload.postId}`);
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch(error) {
-      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
+    if(window.confirm("게시글을 삭제하시겠습니까?")){
+      try {
+        console.log(payload);
+        const [token, tokenPayload] = getToken();
+        const response = await apis.delete(`/api/posts/${payload.postId}`, {
+          headers: {authorization: `Bearer ${token}`}
+        });
+        
+        console.log('삭제response',response.data);
+        return thunkAPI.fulfillWithValue(response.data);
+      } catch(error) {
+        return thunkAPI.rejectWithValue(error.response.data.errorMessage);
+      }
     }
   }
-)
+);
 
 const postsSlice = createSlice({
   name: "postList",
@@ -71,7 +80,9 @@ const postsSlice = createSlice({
       console.log("fulfilled: ", action);
       state.isLoading = false;
       state.isError = false;
-      state.posts = action.payload;
+      console.log(action);
+      // state.posts = action.payload;
+      alert("게시글이 삭제되었습니다.");
     },
     [__deletePost.rejected]: (state, action) => {
       //응답 실패

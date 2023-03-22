@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import Loding from "../components/Loding";
 import { MainPostCard } from "../components/PostComponents";
 import { MainContainer, PostCard } from "../components/StyledComponents";
 import { __getPosts } from "../redux/modules/postsSlice";
@@ -11,6 +12,7 @@ import { __getPosts } from "../redux/modules/postsSlice";
 function Main() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const [postsValue, setPostsValue] = useState([]);
 
   const { isLoading, isError, error, posts } = useSelector((state) => {
     return state.postsSlice;
@@ -18,25 +20,22 @@ function Main() {
 
   useEffect(() => {
     dispatch(__getPosts());
-  }, []);
+    // setPostsValue(posts);
+    console.log(posts);
+  }, [JSON.stringify(posts)]);
 
   if (isLoading) {
-    return <div style={{ backgroundColor: "blue" }}>Now Loading...</div>;
+    return <Loding/>;
   } else if (isError) {
-    alert("페이지를 불러오는 데 실패했습니다.");
-    navigate("/");
-    return (
-      <div style={{ backgroundColor: "red" }}>
-        {error}
-      </div>
-    );
-  }
+    alert(error);
+    console.log(error);
+  };
 
   return (
     <>
       <Header/>
       <MainContainer>
-        { posts.map((item) => {
+        { posts?.map((item) => {
           return (
             <Link to={`/posts/${item.postId}`} key={item.postId}>
               <PostCard>

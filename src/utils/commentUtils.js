@@ -23,7 +23,8 @@ export const addComment = async({postId, value, comments, setComments}) => {
       headers: {authorization: `Bearer ${token}`},
     });
     console.log("response", commentResponse);
-    // setComments([...comments, commentResponse.data.createComment]);
+    console.log("createComment", commentResponse.data.createComment);
+    setComments([...comments, commentResponse.data.createComment]);
     alert(commentResponse.data.message);
   } catch(error) {
     alert(error.response.data.errorMessage);

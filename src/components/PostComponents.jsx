@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { __deletePost } from '../redux/modules/postsSlice';
 import { deleteComment } from '../utils/commentUtils';
-import { fetchPost } from '../utils/postUtils';
+import { fetchPost, imgResult, isUpdated } from '../utils/postUtils';
 import { Authentication } from './Authentication';
 import { InputImgComponent } from './InputComponent';
 
-//메인페이지 post cardbox
+/*메인페이지 post cardbox*/
 export function MainPostCard({img, title, nickname, createdAt}) {
   let alt = title;
   let arr = createdAt.split(' ');
@@ -24,34 +25,32 @@ export function MainPostCard({img, title, nickname, createdAt}) {
   );
 };
 
-//게시물
+/*게시물*/
 export const PostComponent = ({postId}) => {
   const [onePost, setOnePost] = useState(null);
   const [updateResult, setUpdateResult] = useState(false);
-  //게시물에 img 존재할때만 보이기
-  const imgResult = (onePost) => {
-    return onePost?.img !== "false" && <InputImgComponent img={onePost?.img} alt={onePost?.title}/>;
-  };
-
-  const isUpdated = (updateResult) => {
-    return updateResult === true && <label>수정됨</label>;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const deletePost = () => {
+    dispatch(__deletePost({postId}));
+    navigate('/');
   };
 
   useEffect(() => {
-    fetchPost(postId, setOnePost, setUpdateResult);
-  }, [JSON.stringify(onePost)]);
+    fetchPost({postId, setOnePost, setUpdateResult});
+  }, []);
 
   return (
     <>
       <h1>{onePost?.title}</h1>
       <div>
         <label>{onePost?.nickname}</label>
-        {/* <Authentication> */}
+        <Authentication targetUserId={onePost?.userId}>
           <span>
-            <button>연필</button>
-            <button onClick={__deletePost}>쓰</button>
+            <button>수정</button>
+            <button onClick={deletePost}>삭제</button>
           </span>
-        {/* </Authentication> */}
+        </Authentication>
       </div>
       <span>
         <label>{onePost?.createdAt}</label>
@@ -62,9 +61,9 @@ export const PostComponent = ({postId}) => {
       <pre>{onePost?.content}</pre>
     </>
   );
-}
+};
 
-//댓글
+/*댓글*/
 export const PostCommentComponent = ({postId, userId, comment, comments, commentId, setComments}) => {
   return (
     <>
@@ -74,12 +73,12 @@ export const PostCommentComponent = ({postId, userId, comment, comments, comment
             <label>{comment.nickname}</label>
             <label>{comment.createdAt}</label>
           </span>
-          {/* <Authentication targetUserId={userId}> */}
-            {/* 댓글 삭제 버튼 */}
+          {/* 댓글 삭제 버튼 */}
+          <Authentication targetUserId={userId}>
             <button onClick={() => deleteComment({postId, commentId, comments, setComments})}>
               삭제
             </button>
-          {/* </Authentication> */}
+          </Authentication>
         </div>
         <pre>{comment.comment}</pre>
       </div>

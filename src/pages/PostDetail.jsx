@@ -6,14 +6,14 @@ import Header from "../components/Header";
 import { PostCommentComponent, PostComponent } from "../components/PostComponents";
 import { addComment, fetchComment } from "../utils/commentUtils";
 import { Textarea } from "../components/Input";
-import useInput from "../hooks/useInput";
+import { useInputValue } from "../hooks/useInput";
 import { getToken } from "../hooks/getToken";
 
 //상세페이지
 function PostDetail() {
   const postId = useParams().postId;
   const [comments, setComments] = useState([]);
-  const [value, valueHandler] = useInput('');
+  const [value, setValue, valueHandler] = useInputValue('');
   const [token, tokenPayload] = getToken();
 
   //댓글 없을때
@@ -22,6 +22,12 @@ function PostDetail() {
       return <NoComment>댓글이 없습니다.</NoComment>
     }
   };
+  //댓글 추가
+  const addOneComment = () => {
+    addComment({postId, value, comments, setComments});
+    setValue('');
+    console.log("setvalue");
+  }
 
   useEffect(() => {
     fetchComment(postId, setComments);
@@ -31,6 +37,7 @@ function PostDetail() {
     <>
       <Header/>
       <PostWrap>
+        <form action=""></form>
         {/* 게시글 */}
         <PostContainer>
           <PostComponent postId={postId}/>
@@ -46,7 +53,7 @@ function PostDetail() {
                   <PostCommentContainer>
                     <PostCommentComponent 
                       postId={postId}
-                      userId={item.userId} 
+                      userId={item.userId}
                       comment={item}
                       comments={comments}
                       commentId={item.commentId} 
@@ -59,8 +66,8 @@ function PostDetail() {
           </ul>
         </PostCommentWrap>
         <WriteComment>
-          <Textarea inputtype={'commentBox'} onChange={valueHandler}/>
-          <button onClick={() => addComment({postId, value, comments, setComments})}>
+          <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value}/>
+          <button onClick={addOneComment}>
             작성
           </button>
         </WriteComment>
