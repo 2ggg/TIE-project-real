@@ -5,25 +5,19 @@ import Button from '../components/Button';
 import Header from '../components/Header'
 import { Input } from '../components/Input';
 import useInput from '../hooks/useInput';
-import { apis } from '../shared/axios';
+import { apis, Hapis } from '../shared/axios';
 import { cookies } from '../shared/cookie';
-
+import defaltImg from "../assets/image/defalt-img.jpg";
 
 //*작성페이지 토큰이 없으면 입장 불가.
 function Form() {
   const [title, titleHandler] = useInput(``)
   const [content, contenthandler] = useInput(``)
-  const [img, setImg] = useState("../")
+  const [img, setImg] = useState("")
+  const [imgPreview, setImgPreview] = useState(defaltImg);
 
 
   const token = cookies.get("token");
-
-  const postInfo = {
-    title: title,
-    content: content,
-    imgData: [{}],
-  }
-
 
   //!파일 보내는 페키지? 필요
 
@@ -39,39 +33,51 @@ function Form() {
   //* 제출하기.
   const submitPost = async (e) => {
     e.preventDefault();
-    console.log("파일을까보자", e);
-    // const formdata = new FormData();
-    // formdata.append('img', e.target.img.files[0])
+    const formdata = new FormData();
+    formdata.append('title', title)
+    formdata.append('content', content)
+    formdata.append('img', img)
     try {
-      // const result = await apis.post('/api/posts', postInfo)
-      console.log("그냥");
+      const result = await apis.post('api/posts', formdata, {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-type": "multipart/form-data"
+        }
+      })
+      console.log(result.data.message);
+      alert('게시글 작성완료')
+      navigator("/")
     } catch (e) {
-      alert(e)
+      console.log(e);
+      alert(e.response.data.errorMessage)
     }
   }
 
   const onImageHandler = (e) => {
     if (e.target.files.length) {
-      let imgTarget = (e.target.files)[0];
       let fileReader = new FileReader();
+      let imgTarget = (e.target.files)[0];
+      setImg(imgTarget)
       fileReader.readAsDataURL(imgTarget);
       fileReader.onload = function (e) {
-        setImg(e.target.result);
+        setImgPreview(e.target.result);
       }
     } else {
-      setImg("");
+      setImgPreview("");
     }
   }
+
+
 
   return (
     <div >
       <Header />
       <StyledForm onSubmit={submitPost}>
-        <Input inputtype={'box'} value={title} onChange={titleHandler} width='300px' placeholder={'제목'}></Input>
+        <Input inputtype={'box'} value={title} onChange={titleHandler} width='300px' placeholder={'제목'} required></Input>
+        <StyledImg src={imgPreview} name="profile_files" />
         <input type="file" accept="image/*" onChange={onImageHandler} />
-        <img src={img} style={{ height: "100px" }} />
-        <Input inputtype={'box'} value={content} onChange={contenthandler} width='300px' placeholder={'내용'}></Input>
-        <Button type={'submit'}>제출</Button>
+        <Input texttype={'textarea'} inputtype={'box'} height={'100px'} value={content} onChange={contenthandler} width='300px' placeholder={'내용'} required></Input>
+        <Button type={'submit'} width={'300px'} height={'40px'}>제출</Button>
       </StyledForm>
     </div>
   )
@@ -80,9 +86,16 @@ function Form() {
 export default Form;
 
 const StyledForm = styled.form`
-  margin-top: 50px;
+  margin: 50px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
   
+`
+const StyledImg = styled.img`
+  margin: 10px 0px;
+  height: 200px;
+  width: 300px;
+  border-radius: 10px;
 `

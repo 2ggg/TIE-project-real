@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import Header from '../components/Header'
-//상세페이지
-function PostDetail() {
-  return (
-    <>
-      <Header />
-      <p style={{ backgroundColor: '#7ff3b3' }}>상세페이지</p>
-    </>
-  )
-}
-=======
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
@@ -18,16 +5,16 @@ import { useParams } from "react-router-dom";
 import { apis } from "../shared/axios";
 import Header from "../components/Header";
 import { PostCommentComponent, PostComponent } from "../components/PostComponents";
+import { useSelector } from 'react-redux';
 
 //상세페이지
 function PostDetail() {
   const postId = useParams().postId;
   const [comments, setComments] = useState([]);
-  const fetchComment = async(postId) => {
+  const fetchComment = async (postId) => {
     const commentResponse = await apis.get(`api/posts/${postId}/comments`);
     setComments(commentResponse.data.comments);
   };
->>>>>>> 3309e3be4eb64f544c45af0db6c512775028cc7c
 
   useEffect(() => {
     fetchComment(postId);
@@ -35,22 +22,22 @@ function PostDetail() {
 
   return (
     <>
-      <Header/>
+      <Header />
       <PostWrap>
         {/* 게시글 */}
         <PostContainer>
-          <PostComponent postId={postId}/>
+          <PostComponent postId={postId} />
         </PostContainer>
 
         {/* 댓글 */}
-        <PostCommentWrap>
+        <PostCommentWrap>ㅈ
           {noComment(comments)}
           <ul>
             {comments?.map((item) => {
               return (
                 <li key={item.commentId}>
                   <PostCommentContainer>
-                    <PostCommentComponent postId={postId} comment={item}/>
+                    <PostCommentComponent postId={postId} comment={item} />
                   </PostCommentContainer>
                 </li>
               );
@@ -65,7 +52,7 @@ function PostDetail() {
 export default PostDetail;
 
 const noComment = (comments) => {
-  if(comments.length === 0){
+  if (comments.length === 0) {
     return <NoComment>댓글이 없습니다.</NoComment>
   }
 };

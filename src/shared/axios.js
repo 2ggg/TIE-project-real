@@ -1,10 +1,17 @@
 import axios from "axios";
+import { cookies } from './cookie';
 
 export const apis = axios.create({
-<<<<<<< HEAD
-  baseURL: process.env.REACT_APP_SERVER_URL,
-=======
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
->>>>>>> 3309e3be4eb64f544c45af0db6c512775028cc7c
   headers: {},
+});
+
+
+//헤더 보내기 전용
+const token = cookies.get("token");
+export const Hapis = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });

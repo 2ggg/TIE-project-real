@@ -29,11 +29,9 @@ function Login() {
         userId: idValue,
         password: pwValue
       }
-
       const result = await apis.post('api/login', logindata)
       const payload = jwtDecode(result.data.token)
       const nickname = payload.nickname
-
       cookies.set("token", result.data.token, { path: "/" })
       cookies.set("nickname", nickname, { path: "/" })
       alert(`로그인성공!! ${nickname} 님 안녕하세요!`)
