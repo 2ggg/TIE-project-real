@@ -8,12 +8,14 @@ import { addComment, fetchComment } from "../utils/commentUtils";
 import { Textarea } from "../components/Input";
 import { useInputValue } from "../hooks/useInput";
 import Button from "../components/Button";
+import { cookies } from '../shared/cookie';
 
 //상세페이지
 function PostDetail() {
   const postId = useParams().postId;
   const [comments, setComments] = useState([]);
   const [value, setValue, valueHandler] = useInputValue('');
+  const token = cookies.get("token");
 
   //댓글 없을때
   const isNoComment = (comments) => {
@@ -23,9 +25,12 @@ function PostDetail() {
   };
   //댓글 추가
   const addOneComment = () => {
-    addComment({ postId, value, comments, setComments });
-    setValue('');
-    console.log("setvalue");
+    if (token) {
+      addComment({ postId, value, comments, setComments });
+      setValue('');
+    } else {
+      alert('로그인이 필요합니다.')
+    }
   }
 
   useEffect(() => {
@@ -63,7 +68,6 @@ function PostDetail() {
             })}
           </ul>
         </PostCommentWrap>
-
         {/* <form action=""> */}
         <WriteComment>
           <Textarea inputtype={'commentBox'} onChange={valueHandler} value={value} />
