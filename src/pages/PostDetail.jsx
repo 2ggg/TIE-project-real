@@ -60,7 +60,7 @@ function PostDetail() {
         </PostCommentWrap>
         <WriteComment>
           <Textarea inputtype={'commentBox'} onChange={valueHandler}/>
-          <button onClick={() => addComment({postId, token, tokenPayload, value, comments, setComments})}>
+          <button onClick={() => addComment({postId, value, comments, setComments})}>
             작성
           </button>
         </WriteComment>

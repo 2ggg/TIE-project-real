@@ -1,3 +1,4 @@
+import { getToken } from "../hooks/getToken";
 import { apis } from "../shared/axios";
 
 const initialState = {
@@ -14,36 +15,31 @@ export const fetchComment = async(postId, setComments) => {
 };
 
 //댓글 추가하기
-export const addComment = async({postId, token, tokenPayload, value, comments, setComments}) => {
-  const data = {
-    comment: value,
-    // postId,
-    // userId: tokenPayload.userId,
-    // nickname: tokenPayload.nickname,
-  };
+export const addComment = async({postId, value, comments, setComments}) => {
+  const [token, tokenPayload] = getToken();
+  const comment = {comment: value};
   try {
-    const commentResponse = await apis.post(`api/posts/${postId}/comments`, {
+    const commentResponse = await apis.post(`api/posts/${postId}/comments`, comment, {
       headers: {authorization: `Bearer ${token}`},
-      data: data,
     });
     console.log("response", commentResponse);
-    // setComments();
+    // setComments([...comments, commentResponse.data.createComment]);
+    alert(commentResponse.data.message);
   } catch(error) {
     alert(error.response.data.errorMessage);
   }
 };
 
 //댓글 삭제하기
-export const deleteComment = async({token, postId, commentId, comments, setComments}) => {
+export const deleteComment = async({postId, commentId, comments, setComments}) => {
+  const [token, tokenPayload] = getToken();
   if(window.confirm("댓글을 삭제하시겠습니까?")){
     try {
       await apis.delete(`api/posts/${postId}/comments/${commentId}`, {
         headers: {authorization: `Bearer ${token}`}
       });
-      console.log(commentId,'삭제성공');
       alert("삭제되었습니다.");
       setComments(comments.filter((item) => item.commentId !== commentId));
-      
     } catch(error) {
       alert(error.response.data.errorMessage);
     }

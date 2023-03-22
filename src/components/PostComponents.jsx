@@ -46,12 +46,12 @@ export const PostComponent = ({postId}) => {
       <h1>{onePost?.title}</h1>
       <div>
         <label>{onePost?.nickname}</label>
-        <Authentication>
+        {/* <Authentication> */}
           <span>
             <button>연필</button>
             <button onClick={__deletePost}>쓰</button>
           </span>
-        </Authentication>
+        {/* </Authentication> */}
       </div>
       <span>
         <label>{onePost?.createdAt}</label>
@@ -74,12 +74,12 @@ export const PostCommentComponent = ({postId, userId, comment, comments, comment
             <label>{comment.nickname}</label>
             <label>{comment.createdAt}</label>
           </span>
-          <Authentication targetUserId={userId}>
+          {/* <Authentication targetUserId={userId}> */}
             {/* 댓글 삭제 버튼 */}
             <button onClick={() => deleteComment({postId, commentId, comments, setComments})}>
               삭제
             </button>
-          </Authentication>
+          {/* </Authentication> */}
         </div>
         <pre>{comment.comment}</pre>
       </div>

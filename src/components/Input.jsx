@@ -39,10 +39,10 @@ export const Input = ({ inputtype, ...rest }) => {
   )
 }
 //textarea
-export const Textarea = ({inputtype}) => {
+export const Textarea = ({inputtype, onChange}) => {
   const textareaStyle = INPUTSTYLE[inputtype];
   return (
-    <StyledTextarea InputStyle={textareaStyle}/>
+    <StyledTextarea InputStyle={textareaStyle} onChange={onChange}/>
   )
 }
 
