@@ -15,7 +15,6 @@ function PostDetail() {
   const postId = useParams().postId;
   const [comments, setComments] = useState([]);
   const [value, setValue, valueHandler] = useInputValue('');
-  const [token, tokenPayload] = getToken();
 
   //댓글 없을때
   const isNoComment = (comments) => {
