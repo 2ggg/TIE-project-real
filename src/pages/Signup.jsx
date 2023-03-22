@@ -62,17 +62,12 @@ function Signup() {
 
   //*아이디 중복확인
   const checkID = async () => {
-    const checkinpo = {
-      userId: userID,
-    }
+    const checkinpo = { userId: userID, }
     try {
       const result = await apis.post('/api/signup/check', checkinpo)
-      console.log("받은데이터", result.data);
       setCheckId(result.duplicationResult)
-
     }
     catch (e) {
-      // console.error(e.response.data.errorMessage)
       alert(e.response.data.errorMessage)
     }
   }

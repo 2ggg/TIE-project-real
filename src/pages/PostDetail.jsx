@@ -5,8 +5,6 @@ import { useParams } from "react-router-dom";
 import { apis } from "../shared/axios";
 import Header from "../components/Header";
 import { PostCommentComponent, PostComponent } from "../components/PostComponents";
-import { useSelector } from 'react-redux';
-
 //상세페이지
 function PostDetail() {
   const postId = useParams().postId;
@@ -15,7 +13,6 @@ function PostDetail() {
     const commentResponse = await apis.get(`api/posts/${postId}/comments`);
     setComments(commentResponse.data.comments);
   };
-
   useEffect(() => {
     fetchComment(postId);
   }, [JSON.stringify(comments)]);
@@ -28,7 +25,6 @@ function PostDetail() {
         <PostContainer>
           <PostComponent postId={postId} />
         </PostContainer>
-
         {/* 댓글 */}
         <PostCommentWrap>ㅈ
           {noComment(comments)}

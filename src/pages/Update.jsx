@@ -11,36 +11,31 @@ import { apis } from '../shared/axios';
 import { cookies } from '../shared/cookie';
 //수정
 function Update() {
-  const param = useParams();
-  const id = param.postId
   const { isLoading, isError, error, main } = useSelector((state) => {
     return state.postsSlice;
   });
+  const token = cookies.get("token");
+  const decodetoken = jwtDecode(token);
+  const navigator = useNavigate();
+  const param = useParams();
+  const id = param.postId
   const foudData = main.find((data) => data.postId == param.postId)
-  console.log("데이터!", foudData);
   const foundimg = `${process.env.REACT_APP_IMAGE_URL}` + foudData.img
-
   const [title, titleHandler] = useInput(foudData.title)
   const [content, contenthandler] = useInput(foudData.content)
   const [imgdata, setImgData] = useState(foundimg)
   const [imgPreview, setImgPreview] = useState(foundimg);
 
-
-  const token = cookies.get("token");
-
-
-  //!파일 보내는 페키지? 필요
-
   //*가드 토큰이 없으면 내보내기.
-  const navigator = useNavigate();
   useEffect(() => {
     if (!token) {
       alert("로그인이 필요한 서비스 입니다.")
       navigator("/login");
     }
-    // const results = await apis.get(`/api/posts/${id}/img`, {
-    //   responseType: "blob"
-    // })
+    if (foudData.userId !== decodetoken.userId) {
+      alert("작성자가 아닙니다!")
+      navigator("/");
+    }
   }, [])
 
   //* 제출하기.
@@ -54,23 +49,19 @@ function Update() {
       const result = await apis.patch(`api/posts/${id}`, formdata, {
         headers: { authorization: `Bearer ${token}` }
       })
-      console.log("결과값", result);
       alert('게시글 수정완료')
       navigator("/")
-
-      //!수정하기
     } catch (e) {
       console.log(e);
       alert(e.response.data.errorMessage)
     }
   }
 
-
+  //*이미지 등록시 img 프리뷰 설정
   const onImageHandler = (e) => {
     if (e.target.files.length) {
       let fileReader = new FileReader();
       let imgTarget = (e.target.files)[0];
-      console.log("이미지타겟", imgTarget);
       setImgData(imgTarget)
       fileReader.readAsDataURL(imgTarget);
       fileReader.onload = function (e) {
@@ -80,17 +71,6 @@ function Update() {
       setImgPreview("");
     }
   }
-
-  // useEffect(async () => {
-  //   try {
-  //     console.log("id", id);
-  //     const result = await apis.get(`/api/posts/${id}/img`, {
-  //       responseType: "blob"
-  //     })
-  //     console.log(result);
-  //   } catch (e) {
-  //   }
-  // }, [])
 
   return (
     <div >

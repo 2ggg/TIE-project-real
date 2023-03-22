@@ -14,7 +14,6 @@ function Main() {
   const { isLoading, isError, error, main } = useSelector((state) => {
     return state.postsSlice;
   });
-  console.log(main);
   useEffect(() => {
     dispatch(__getPosts());
   }, []);

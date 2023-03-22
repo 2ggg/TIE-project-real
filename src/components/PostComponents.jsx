@@ -46,7 +46,7 @@ export const PostComponent = ({ postId }) => {
   const navigator = useNavigate();
   const token = cookies.get("token");
   const tokenuserId = jwtDecode(token).userId;
-  const { isLoading, isError, error, main } = useSelector((state) => {
+  const { main } = useSelector((state) => {
     return state.postsSlice;
   });
   const foudData = main.find((data) => data.postId == postId)
@@ -65,7 +65,6 @@ export const PostComponent = ({ postId }) => {
     setOnePost(postResponse.data.post);
     setUpdateResult(postResponse.data.isUpdate);
   };
-
 
 
   const goDetail = () => {

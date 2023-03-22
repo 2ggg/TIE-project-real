@@ -14,9 +14,8 @@ export const __getPosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await apis.get(`api/posts`);
-      console.log("__getPosts", response.data);
       return thunkAPI.fulfillWithValue(response.data);
-    } catch(error) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     };
   }
@@ -35,7 +34,6 @@ const postsSlice = createSlice({
     },
     [__getPosts.fulfilled]: (state, action) => {
       //응답 성공
-      console.log("fulfilled: ", action);
       state.isLoading = false;
       state.isError = false;
       state.main = action.payload;

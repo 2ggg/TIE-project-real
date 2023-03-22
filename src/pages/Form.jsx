@@ -11,15 +11,11 @@ import defaltImg from "../assets/image/defalt-img.jpg";
 
 //*작성페이지 토큰이 없으면 입장 불가.
 function Form() {
+  const token = cookies.get("token");
   const [title, titleHandler] = useInput(``)
   const [content, contenthandler] = useInput(``)
   const [img, setImg] = useState("")
   const [imgPreview, setImgPreview] = useState(defaltImg);
-
-
-  const token = cookies.get("token");
-
-  //!파일 보내는 페키지? 필요
 
   //*가드 토큰이 없으면 내보내기.
   const navigator = useNavigate();
@@ -66,7 +62,6 @@ function Form() {
       setImgPreview("");
     }
   }
-
 
 
   return (
