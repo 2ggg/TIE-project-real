@@ -12,13 +12,13 @@ import { __getPosts } from "../redux/modules/postsSlice";
 function Main() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [postsValue, setPostsValue] = useState([]);
 
   const { isLoading, isError, error, posts } = useSelector((state) => {
     return state.postsSlice;
   });
   useEffect(() => {
     dispatch(__getPosts());
+    console.log(posts);
   }, [JSON.stringify(posts)]);
 
   if (isLoading) {

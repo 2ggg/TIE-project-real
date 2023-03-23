@@ -34,7 +34,7 @@ export const PostComponent = ({ postId }) => {
   const { posts } = useSelector((state) => {
     return state.postsSlice;
   });
-  const foudData = posts.find((data) => data.postId == postId)
+  const foudData = posts?.find((data) => data.postId == postId)
   const [onePost, setOnePost] = useState(null);
   const [updateResult, setUpdateResult] = useState(false);
   const navigate = useNavigate();

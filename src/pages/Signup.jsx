@@ -143,7 +143,7 @@ const BoxDiv = styled.div`
 
 const StyledComentDiv = styled.div`
   color:${({ color }) => color};
-  font-size: 1px;
+  font-size:10px ;
   margin-top: 5px;
 
 `
